@@ -4,9 +4,9 @@ import { initializeApp } from "firebase/app";
 //*** Import about Authentication */
 import {
   getAuth,
-  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 //*** Import about FirestoreDB */
@@ -25,19 +25,26 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-// for sing-in with googlePopup
+// export const auth = getAuth();
 export const auth = getAuth();
-export const signInWithCooglePopup = () => signInWithPopup(auth, provider);
+// for sing-in with googlePopup
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
 
+// Get db
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+//*** sign-in and get auth then store user data */
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation
+) => {
   const userDocRef = doc(db, "users", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
@@ -48,7 +55,12 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     const createdAt = new Date();
 
     try {
-      await setDoc(userDocRef, { displayName, email, createdAt });
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalInformation,
+      });
     } catch (err) {
       console.log("error creating the user", err.message);
     }
@@ -56,4 +68,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 
   // if user data exists
   return userDocRef;
+};
+
+//*** get auth from sign-up with email and password */
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return createUserWithEmailAndPassword(auth, email, password);
 };
