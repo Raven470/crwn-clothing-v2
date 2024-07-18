@@ -5,8 +5,8 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
-import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
+import FormInput from "../form-input/form-input.component";
 
 import "./sign-up-form.styles.scss";
 
@@ -17,10 +17,12 @@ const defaultFormFields = {
   confirmPassword: "",
 };
 
+/// SignUpForm ////////////////////////////////////////////////////////////
 function SignUpForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+  // Formfields reset
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -50,9 +52,9 @@ function SignUpForm() {
     }
   }
 
+  // track all of the form input
   function handleChange(event) {
     const { name, value } = event.target;
-
     setFormFields({ ...formFields, [name]: value });
   }
 

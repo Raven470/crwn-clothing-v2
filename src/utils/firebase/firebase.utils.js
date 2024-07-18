@@ -8,6 +8,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 //*** Import about FirestoreDB */
@@ -44,8 +46,10 @@ export const db = getFirestore();
 //*** sign-in and get auth then store user data */
 export const createUserDocumentFromAuth = async (
   userAuth,
-  additionalInformation
+  additionalInformation = {}
 ) => {
+  if (!userAuth) return;
+
   const userDocRef = doc(db, "users", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
 
@@ -56,6 +60,7 @@ export const createUserDocumentFromAuth = async (
     const createdAt = new Date();
 
     try {
+      // return await setDoc(userDocRef, {
       await setDoc(userDocRef, {
         displayName,
         email,
@@ -67,6 +72,7 @@ export const createUserDocumentFromAuth = async (
     }
   }
 
+  console.log("should not be here");
   // if user data exists
   return userDocRef;
 };
@@ -78,9 +84,25 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-///* sign in */
+///* sign in with email & password*/
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+///* sign out */
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  // onAuthStateChanged(auth, callback, errorCallback, completedCallback);
+  onAuthStateChanged(auth, callback);
+
+/* 
+  {
+  next: (nextVal) => {// do something with val}
+  error: (error) => {// do something with error}
+  compele: () => {do comething when finished}
+  }
+
+*/
