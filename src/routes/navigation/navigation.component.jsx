@@ -13,7 +13,7 @@ import "./navigation.styles.scss";
 
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+  const { isCartOpen } = useContext(CartContext);
 
   return (
     <>
