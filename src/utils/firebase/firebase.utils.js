@@ -106,10 +106,9 @@ export const createUserDocumentFromAuth = async (
       console.log("error creating the user", err.message);
     }
   }
-
-  console.log("should not be here");
   // if user data exists
-  return userDocRef;
+  // return userDocRef;
+  return userSnapshot;
 };
 
 //*** get auth from sign-up with email and password */
@@ -141,3 +140,16 @@ export const onAuthStateChangedListener = (callback) =>
   }
 
 */
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
+};
