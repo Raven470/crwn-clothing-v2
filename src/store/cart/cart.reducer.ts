@@ -21,14 +21,14 @@ export const cartReducer = (
   if (setCartItems.match(action)) {
     return {
       ...state,
-      cartItems: action.payload,
+      cartItems: action.payload as CartItem[],
     };
   }
 
   if (setIsCartOpen.match(action)) {
     return {
       ...state,
-      isCartOpen: action.payload,
+      isCartOpen: action.payload as boolean,
     };
   }
 

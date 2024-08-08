@@ -27,7 +27,7 @@ export function withMatcher(actionCreator: Function) {
 
 export type ActionWithPayload<T, P> = {
   type: T;
-  payload: P;
+  payload?: P;
 };
 
 export type Action<T> = {
@@ -45,6 +45,9 @@ export function createAction<T extends string, P>(
   payload: void
 ): Action<T>;
 
-export function createAction<T extends string, P>(type: T, payload: P) {
+export function createAction<T extends string, P>(
+  type: T,
+  payload: P
+): { type: string; payload?: any } {
   return { type, payload };
 }

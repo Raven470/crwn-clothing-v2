@@ -11,9 +11,9 @@ import {
 import { UserData } from "../../utils/firebase/firebase.utils";
 
 export type UserState = {
-  readonly currentUser: UserData | null;
+  readonly currentUser: UserData | null | undefined;
   readonly isLoading: boolean;
-  readonly error: Error | null;
+  readonly error: Error | null | undefined;
 };
 
 // initial state
