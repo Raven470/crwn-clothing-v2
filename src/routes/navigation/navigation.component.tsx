@@ -8,7 +8,7 @@ import { signOutStart } from "../../store/user/user.action";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 
-import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component.jsx";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
@@ -35,9 +35,9 @@ export default function Navigation() {
         <NavLinks>
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={signOutUser}>
+            <span onClick={signOutUser} style={{ cursor: "pointer" }}>
               SIGN OUT
-            </NavLink>
+            </span>
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
           )}

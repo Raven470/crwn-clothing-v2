@@ -1,6 +1,6 @@
-import { useState, FormEvent, ChangeEvent } from "react";
+import { AuthError } from "firebase/auth";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AuthError, AuthErrorCodes } from "firebase/auth";
 
 import {
   emailSignInStart,
