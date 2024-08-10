@@ -17,7 +17,7 @@ import {
   NavigationContainer,
   NavLink,
   NavLinks,
-} from "./navigation.styles.jsx";
+} from "./navigation.styles";
 
 export default function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
